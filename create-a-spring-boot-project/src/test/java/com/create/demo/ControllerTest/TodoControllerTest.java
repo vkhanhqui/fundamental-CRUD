@@ -71,14 +71,16 @@ public class TodoControllerTest {
 
     @Test
     public void testUpdateAModelById() throws Exception {
+        SpringModels request = new SpringModels("2",2);
+
         SpringModels response = new SpringModels("2", 4);
 
-        given(springServices.updateAModelById("2", response))
+        given(springServices.updateAModelById("2", request))
                 .willReturn(response);
 
-        mockMvc.perform(put("/spring/2")
+        mockMvc.perform(put("/spring/{id}","2")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(TestUtil.convertObjectToJsonBytes(response)))
+                .content(TestUtil.convertObjectToJsonBytes(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is("2")))
                 .andExpect(jsonPath("$.stt", is(4)));
