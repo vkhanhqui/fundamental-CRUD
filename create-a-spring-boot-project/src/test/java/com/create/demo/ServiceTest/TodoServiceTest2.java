@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @RunWith(SpringRunner.class)
@@ -39,8 +39,7 @@ public class TodoServiceTest2 {
 
         when(springRepositories.findAll())
                 .thenReturn(sample);
-
-
+      
         Assert.assertEquals(3, springServices.getAll().size());
     }
 
@@ -50,18 +49,43 @@ public class TodoServiceTest2 {
 
         when(springRepositories.findById("1"))
                 .thenReturn(java.util.Optional.of(response));
-
-
+      
         Assert.assertEquals(1
                 , springServices.getAModelById("1").getStt());
     }
 
     @Test
     public void updateAModelById() {
-        SpringModels response = new SpringModels("4", 4);
+        SpringModels response = new SpringModels("1", 1);
 
-        when(springRepositories.findById("4"))
+        when(springRepositories.findById("1"))
                 .thenReturn(java.util.Optional.of(response));
+      
+        response.setStt(4);
+        when(springRepositories.save(response))
+                .thenReturn(response);
+
+        Assert.assertEquals(4,
+                springServices.updateAModelById("1", response).getStt());
+    }
+
+    @Test
+    public void deleteAModelById() {
+        SpringModels response = new SpringModels("1", 1);
+
+        when(springRepositories.findById("1"))
+                .thenReturn(java.util.Optional.of(response));
+
+        springServices.deleteAModelById("1");
+        verify(springRepositories, times(1)).deleteById("1");
+    }
+
+    @TestConfiguration
+    public static class TodoServiceTest2Configuration {
+        @Bean
+        SpringImplements springImplements() {
+            return new SpringImplements();
+        }
 
         response.setStt(1);
         when(springRepositories.save(response))
@@ -69,6 +93,7 @@ public class TodoServiceTest2 {
 
         Assert.assertEquals(1,
                 springServices.updateAModelById("4", response).getStt());
+
     }
 
     @TestConfiguration

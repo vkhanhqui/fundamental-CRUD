@@ -4,6 +4,7 @@ package com.create.demo.services.interfaces;
 import com.create.demo.models.SpringModels;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface SpringServices {
@@ -18,4 +19,5 @@ public interface SpringServices {
     void deleteAModelById(String id);
 
     List<SpringModels> getAllByStt(int stt);
+
 }
