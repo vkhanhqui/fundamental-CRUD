@@ -39,7 +39,7 @@ public class TodoServiceTest2 {
 
         when(springRepositories.findAll())
                 .thenReturn(sample);
-      
+
         Assert.assertEquals(3, springServices.getAll().size());
     }
 
@@ -49,7 +49,7 @@ public class TodoServiceTest2 {
 
         when(springRepositories.findById("1"))
                 .thenReturn(java.util.Optional.of(response));
-      
+
         Assert.assertEquals(1
                 , springServices.getAModelById("1").getStt());
     }
@@ -60,7 +60,7 @@ public class TodoServiceTest2 {
 
         when(springRepositories.findById("1"))
                 .thenReturn(java.util.Optional.of(response));
-      
+
         response.setStt(4);
         when(springRepositories.save(response))
                 .thenReturn(response);
@@ -87,22 +87,6 @@ public class TodoServiceTest2 {
             return new SpringImplements();
         }
 
-        response.setStt(1);
-        when(springRepositories.save(response))
-                .thenReturn(response);
-
-        Assert.assertEquals(1,
-                springServices.updateAModelById("4", response).getStt());
 
     }
-
-    @TestConfiguration
-    public static class TodoServiceTest2Configuration {
-        @Bean
-        SpringImplements springImplements() {
-            return new SpringImplements();
-        }
-    }
-
-
 }
